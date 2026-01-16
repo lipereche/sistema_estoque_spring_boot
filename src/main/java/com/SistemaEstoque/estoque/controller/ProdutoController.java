@@ -8,6 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/produtos")
+@CrossOrigin(origins = "*")
 public class ProdutoController {
 
     private final ProdutoService service;
@@ -24,5 +25,25 @@ public class ProdutoController {
     @GetMapping
     public List<Produto> listar() {
         return service.listar();
+    }
+
+    @PutMapping("/{id}/aumentar")
+    public Produto aumentarEstoque(
+            @PathVariable Long id,
+            @RequestParam int quantidade) {
+
+        return service.aumentarEstoque(id, quantidade);
+    }
+
+    @PutMapping("/{id}/diminuir")
+    public Produto diminuirEstoque(
+            @PathVariable Long id,
+            @RequestParam int quantidade) {
+
+        return service.diminuirEstoque(id, quantidade);
+    }
+    @DeleteMapping("/{id}")
+    public void excluir(@PathVariable Long id){
+        service.excluir(id);
     }
 }
